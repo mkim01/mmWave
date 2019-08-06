@@ -11,14 +11,14 @@
 
 close all;
 clear;
-%pkg load statistics
+pkg load statistics
 %----Play-with-values---------------------------------------
 aID = getenv('SLURM_ARRAY_TASK_ID')
 if(isempty(aID))
   warning('aID is empty. Replacing it with 1.')  
   aID = '1'; %Runs only for first value of AP density when aID=1
 end
-rng('shuffle');
+%rng('shuffle');
 
 % considerLOS=0;
 % considerNLOS=1;
@@ -28,15 +28,14 @@ hb = 1.8; %height blocker
 hr = 1.4; %height receiver (UE)
 ht = 5; %height transmitter (BS)
 frac = (hb-hr)/(ht-hr);
-simTime = 60*60; %sec Total Simulation time
+simTime = 3*60*60; %sec Total Simulation time
 % Note!!! simTime must be >100s else the code won't work :)
 tstep = 0.001; %(sec) time step
 mu = 2; %Expected bloc dur =1/mu sec
 R = 100; %m Radius
 densityBL = 0.01;%[0.005,0.01];
 densityAP = [50,100,200,300,400,500]*10^(-6);%(1:1:10)/10^4;
-omegaVal = 0;%[0, pi/3];
-
+omegaVal = pi/3;%[0, pi/3];
 
 s_input = cell(1,length(densityBL));
 s_mobility = cell(1,length(densityBL));
