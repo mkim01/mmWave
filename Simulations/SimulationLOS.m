@@ -11,14 +11,14 @@
 
 close all;
 clear;
-pkg load statistics
+%pkg load statistics
 %----Play-with-values---------------------------------------
 aID = getenv('SLURM_ARRAY_TASK_ID')
 if(isempty(aID))
   warning('aID is empty. Replacing it with 1.')  
   aID = '1'; %Runs only for first value of AP density when aID=1
 end
-%rng('shuffle');
+rng('shuffle');
 
 % considerLOS=0;
 % considerNLOS=1;
@@ -48,7 +48,7 @@ s_input{indB} = struct('V_POSITION_X_INTERVAL',[-R R],...%(m)
     'V_WALK_INTERVAL',[1.00 60.00],...%walk time (s)
     'V_DIRECTION_INTERVAL',[-180 180],...%(degrees)
     'SIMULATION_TIME',simTime,...%(s)
-    'NB_NODES',4000);%4*R^2*densityBL(indB));
+    'NB_NODES',400);%4*R^2*densityBL(indB));
 
 % Generate_Mobility function is Copyright (c) 2011, Mathieu Boutin
 s_mobility{indB} = Generate_Mobility(s_input{indB});
