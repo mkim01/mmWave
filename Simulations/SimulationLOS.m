@@ -30,7 +30,7 @@ ht = 5; %height transmitter (BS)
 frac = (hb-hr)/(ht-hr);
 simTime = 60*60; %sec Total Simulation time
 % Note!!! simTime must be >100s else the code won't work :)
-tstep = 0.01; %(sec) time step
+tstep = 0.001; %(sec) time step
 mu = 2; %Expected bloc dur =1/mu sec
 R = 100; %m Radius
 densityBL = 0.01;%[0.005,0.01];
@@ -38,8 +38,8 @@ densityAP = [50,100,200,300,400,500]*10^(-6);%(1:1:10)/10^4;
 omegaVal = 0;%[0, pi/3];
 
 
-s_input = cell(1,2);
-s_mobility = cell(1,2);
+s_input = cell(1,length(densityBL));
+s_mobility = cell(1,length(densityBL));
 for indB=1:length(densityBL)
 s_input{indB} = struct('V_POSITION_X_INTERVAL',[-R R],...%(m)
     'V_POSITION_Y_INTERVAL',[-R R],...%(m)
@@ -48,7 +48,7 @@ s_input{indB} = struct('V_POSITION_X_INTERVAL',[-R R],...%(m)
     'V_WALK_INTERVAL',[1.00 60.00],...%walk time (s)
     'V_DIRECTION_INTERVAL',[-180 180],...%(degrees)
     'SIMULATION_TIME',simTime,...%(s)
-    'NB_NODES',400);%4*R^2*densityBL(indB));
+    'NB_NODES',4*R^2*densityBL(indB));%4*R^2*densityBL(indB));
 
 % Generate_Mobility function is Copyright (c) 2011, Mathieu Boutin
 s_mobility{indB} = Generate_Mobility(s_input{indB});
