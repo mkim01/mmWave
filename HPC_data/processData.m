@@ -10,8 +10,8 @@ files = ls('*.csv');
 nFiles = size(files,1);
 
 
-densityBL = [0.01, 0.005];
-densityAP = [50,100,200,300,400,500]*10^(-6);%(1:1:10)/10^4;
+densityBL = [0.005,0.01];
+densityAP = [50,100,200,300]*10^(-6);%(1:1:10)/10^4;
 omegaVal = [0, pi/3];
 
 mu=2;

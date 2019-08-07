@@ -87,7 +87,10 @@ for indB = 1:nB %for every blocker
     end
     
 end
-
+% for indC = 1:nB
+%   for iter = 1:(length(s_mobility_
+%
+%
 
 totaltime = (simTime)/tstep;
 binary_seq = zeros(nT,totaltime); %time sequence for every BS
@@ -131,7 +134,11 @@ end
 %%duration: (sec) count total # of 1's multiplied by tstep/blockageCount
 
 avgFreq = sum(diff(allBl)>0)/simTime;
-avgDur = sum(allBl)*tstep/sum(diff(allBl)>0);
+if (sum(diff(allBl)) == 0)
+  avgDur = 0;
+else
+  avgDur = sum(allBl)*tstep/sum(diff(allBl)>0);
+end
 probAllBl = sum(allBl)*tstep/simTime;
 
 %%Return now
