@@ -34,7 +34,7 @@ tstep = 0.001; %(sec) time step
 mu = 2; %Expected bloc dur =1/mu sec
 R = 100; %m Radius
 densityBL = 0.01;%[0.005,0.01];
-densityAP = [50,100,200,300,400,500]*10^(-6);%(1:1:10)/10^4;
+densityAP = [50,100,200,300]*10^(-6);%(1:1:10)/10^4;
 omegaVal = pi/3;%[0, pi/3];
 
 s_input = cell(1,length(densityBL));
@@ -64,7 +64,6 @@ for indT = 1:length(densityAP)
             omega = omegaVal(indO);
             rhoB = densityBL(indB);%0.65;%Rajeev calculated central park
             nB = 4*R^2*rhoB;%=4000; %number of blokers
-            
             BS_input = struct('WANNAPLOT',wannaplot,...
                 'RADIUS_AROUND_UE',R,...
                 'DENSITY_AP',rhoT,...
