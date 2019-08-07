@@ -11,14 +11,14 @@
 
 close all;
 clear;
-pkg load statistics
+%pkg load statistics
 %----Play-with-values---------------------------------------
 aID = getenv('SLURM_ARRAY_TASK_ID')
 if(isempty(aID))
   warning('aID is empty. Replacing it with 1.')  
   aID = '1'; %Runs only for first value of AP density when aID=1
 end
-%rng('shuffle');
+rng('shuffle');
 
 % considerLOS=0;
 % considerNLOS=1;
