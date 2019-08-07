@@ -1,5 +1,5 @@
 *.asv
-
+**.csv
 *.zip
 *tar*
 thesis*
