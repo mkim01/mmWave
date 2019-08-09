@@ -23,11 +23,11 @@ nO = length(omegaVal);
 nAll = nBL*nAP*nO;
 
 data = cell(nFiles,1);
-datanew = cell(1,nBL*nAP*nO);
+datanew = cell(1,nAP,nBL,nO);
 
-# Read in all files
-# Store each file in an entry in 'data'
-# (each entry in 'data' has nBL*nAP*nO columns)
+% Read in all files
+% Store each file in an entry in 'data'
+% (each entry in 'data' has nBL*nAP*nO columns)
 for i=1:nFiles
         if (exist(strcat('output',int2str(i),'.csv'))==0)
             warning(strcat('output',int2str(i),'.csv - File does not exist'))
@@ -43,11 +43,11 @@ for i=1:nFiles
             
             data{i}(3,colNum0) = 1; %when n=0, prob of blockage=1;
             
+         
             for ii = 1:(nBL*nAP*nO)
                 if(data{i}(5,ii)~=0)
                     datanew{ii} = [datanew{ii},data{i}(1:3,ii)];
-                end
-                
+                end               
             end
         end
 end
@@ -69,12 +69,19 @@ end
 freqBl = meanval(1, :);
 durBl = meanval(2, :);
 probBl = meanval(3, :);
-# BL density, AP density, and omega for each entry
+% BL density, AP density, and omega for each entry
 N = 1:nAll;
-densAPIdx = ceil(N / nAP);
-densBLIdx = ceil(N / nBL) - (nBL)*(ceil( N / nAP ) - 1);
-omegas = mod(N, nO) + 1;
-omegaIdx= [omegas(nAll) omegas(1:nAll-1)];
+omegaIdx = ceil(N/(nAP*nBL));
+densBLIdx = ceil(N/nAP) - nO*(ceil(N/(nAP*nBL))-1);
+APIs = mod(N , nAP) + 1;
+densAPIdx = [ APIs(nAll) APIs(1:nAll-1)];
+
+
+
+% densAPIdx = ceil(N / nAP);
+% densBLIdx = ceil(N / nBL) - (nBL)*(ceil( N / nAP ) - 1);
+% omegas = mod(N, nO) + 1;
+% omegaIdx= [omegas(nAll) omegas(1:nAll-1)];
 
 figure
 scatter(densityAP(densAPIdx), freqBl, 100, 2*omegaIdx+densBLIdx, 'filled')
