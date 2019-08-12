@@ -28,7 +28,7 @@ hb = 1.8; %height blocker
 hr = 1.4; %height receiver (UE)
 ht = 5; %height transmitter (BS)
 frac = (hb-hr)/(ht-hr);
-simTime = 3 * 60*60; %sec Total Simulation time
+simTime = 60*60%3 * 60*60; %sec Total Simulation time
 % Note!!! simTime must be >100s else the code won't work :)
 tstep = 0.001; %(sec) time step
 mu = 2; %Expected bloc dur =1/mu sec
@@ -88,4 +88,4 @@ for indT = 1:length(densityAP)
 end
 %Use the code processData9.m to analyze and plot the results
 csvwrite(strcat('output',num2str(aID),'.csv'),finaldata)
-csvwrite(strcat('blDurations',num2str(aID),'.csv'),final_blockage_durations)
+save(strcat('blDurations',num2str(aID),'.mat'),'final_blockage_durations')
