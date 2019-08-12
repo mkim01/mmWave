@@ -144,16 +144,17 @@ probAllBl = sum(allBl)*tstep/simTime;
 
 blockage_starts = find(diff(allBl)>0);
 blockage_ends = find(diff(allBl)<0);
-if blockage_starts(1) > blockage_ends(1)
-  blockage_ends = blockage_ends(2:end)
+if length(blockage_starts) == 0
+  blockage_durations = [];
+else
+  if blockage_starts(1) > blockage_ends(1)
+    blockage_ends = blockage_ends(2:end)
+  end
+  if blockage_ends(end) < blockage_starts(end)
+    blockage_starts = blockage_starts(1:end-1)
+  end
+  blockage_durations = blockage_ends - blockage_starts;
 end
-if blockage_ends(end) < blockage_starts(end)
-  blockage_starts = blockage_starts(1:end-1)
-end
-
-blockage_durations = blockage_ends - blockage_starts;
-
-
 
 %%Return now
 output=[avgFreq,avgDur,probAllBl,nTorig,nT];
