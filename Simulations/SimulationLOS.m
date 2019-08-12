@@ -18,7 +18,7 @@ if(isempty(aID))
   warning('aID is empty. Replacing it with 1.')  
   aID = '1'; %Runs only for first value of AP density when aID=1
 end
-rng('shuffle');
+%rng('shuffle');
 
 % considerLOS=0;
 % considerNLOS=1;
@@ -53,7 +53,7 @@ s_input{indB} = struct('V_POSITION_X_INTERVAL',[-R R],...%(m)
 s_mobility{indB} = Generate_Mobility(s_input{indB});
 end
 finaldata = zeros(5,length(densityAP),length(densityBL),length(omegaVal));
-
+final_blockage_durations = cell(1,length(densityAP),length(densityBL),length(omegaVal));
 for indT = 1:length(densityAP)
         rhoT = densityAP(indT);
         nTorig = poissrnd(rhoT*pi*R^2); %original AP number (without self-block)
@@ -78,11 +78,14 @@ for indT = 1:length(densityAP)
                 'NUM_BL',nB);
             
             %BlockageSimFn function is written by Ish Jain
-            output = BlockageSimFn(s_mobility{indB},BS_input);
+            [output, blockage_durations] = BlockageSimFn(s_mobility{indB},BS_input);
             finaldata(:,indT,indB,indO) = output;
             %         output is [avgFreq,avgDur,probAllBl,th_freqBl,th_durBl,th_probAllBl];
+            final_blockage_durations{1,indT,indB,indO} = blockage_durations;
+            % each element of blockage durations is the duration of one blockage event
         end
     end
 end
 %Use the code processData9.m to analyze and plot the results
 csvwrite(strcat('output',num2str(aID),'.csv'),finaldata)
+csvwrite(strcat('blDurations',num2str(aID),'.csv'),final_blockage_durations)

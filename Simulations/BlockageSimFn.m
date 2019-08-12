@@ -1,4 +1,4 @@
-function output = BlockageSimFn(s_mobility,BS_input)
+function [output, blockage_durations] = BlockageSimFn(s_mobility,BS_input)
 % Written by Ish Jain
 % NYU Tandon School of Engineering
 % Date: June 2018
@@ -44,6 +44,7 @@ yT = rT(tempInd).*sin(alphaTorig(tempInd));%location of APs (angle)
 nT = length(tempInd); % number of BS not blocked by self-blockage
 % nT=0
 if(nT==0)
+    blockage_durations = [];
     output=[0,0,0,nTorig,nT];   
     return;
 end % Dealing zero APs
@@ -140,6 +141,19 @@ else
   avgDur = sum(allBl)*tstep/sum(diff(allBl)>0);
 end
 probAllBl = sum(allBl)*tstep/simTime;
+
+blockage_starts = find(diff(allBl)>0);
+blockage_ends = find(diff(allBl)<0);
+if blockage_starts(1) > blockage_ends(1)
+  blockage_ends = blockage_ends(2:end)
+end
+if blockage_ends(end) < blockage_starts(end)
+  blockage_starts = blockage_starts(1:end-1)
+end
+
+blockage_durations = blockage_ends - blockage_starts;
+
+
 
 %%Return now
 output=[avgFreq,avgDur,probAllBl,nTorig,nT];
