@@ -33,9 +33,9 @@ simTime = 60*60%3 * 60*60; %sec Total Simulation time
 tstep = 0.001; %(sec) time step
 mu = 2; %Expected bloc dur =1/mu sec
 R = 100; %m Radius
-densityBL = [0.005,0.01,0.02];
-densityAP = [50,100,200,300,400,500]*10^(-6);%(1:1:10)/10^4;
-omegaVal = [0, pi/3];
+densityBL = [0.005,0.1,0.5];
+densityAP = [50,100,500,1000,2500]*10^(-6);%(1:1:10)/10^4;
+omegaVal = [pi/3];
 
 s_input = cell(1,length(densityBL));
 s_mobility = cell(1,length(densityBL));
